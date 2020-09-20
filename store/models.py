@@ -12,10 +12,21 @@ class Customer(models.Model):
         return self.name
 
 class Product(models.Model):
+    categorys = (
+        ('Processors','Processors'),
+        ('Motherboards','Motherboards'),
+        ('Memory(ram)','Memory(ram)'),
+        ('Storage','Storage'),
+        ('Cabinets','Cabinets'),
+        ('Cooling System','Cooling System'),
+        ('Accessories','Accessories'),
+    )
     name = models.CharField(max_length=200)
     price = models.FloatField()
     digital = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+    category = models.CharField(max_length=200, null=True,blank=True, choices=categorys)
+    description = models.CharField(max_length=1000,null=True, blank=True)
 
     def __str__(self):
         return self.name

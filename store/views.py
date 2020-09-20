@@ -111,3 +111,16 @@ def processOrder(request):
         print('user is not logged in..')
 
     return JsonResponse('Payment Complete!', safe=False)
+
+def detail(request, pk):
+    product = Product.objects.get(id=pk)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        cartItems = order['get_cart_items']
+    context = {'product':product, 'cartItems':cartItems}
+    return render(request, 'store/detail.html', context)
